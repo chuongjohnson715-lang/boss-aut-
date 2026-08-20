@@ -1,5 +1,6 @@
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+import time
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -8,6 +9,8 @@ PROFILE_DIR = DATA_DIR / "edge_profile"
 
 DATA_DIR.mkdir(exist_ok=True)
 PROFILE_DIR.mkdir(exist_ok=True)
+
+BOSS_URL = "https://www.zhipin.com/web/chat/index"
 
 
 with sync_playwright() as p:
@@ -21,20 +24,69 @@ with sync_playwright() as p:
 
     page = context.pages[0] if context.pages else context.new_page()
 
-    page.goto(
-        "https://www.zhipin.com/sem/10.html?_ts=1787103782801&sid=sem_bingpc&qudao=bing_pc_H120003UY5&plan=TCPA-%E5%BF%85%E5%BA%94-%E5%93%81%E7%89%8C&unit=%E4%BD%8E%E6%88%90%E6%9C%AC%E9%AB%98%E6%B6%88%E8%B4%B9%E8%AF%8D-1215&keyword=boss&msclkid=d8bf9faecc981d0d7ef7f52bc6bdfe6c",
-        wait_until="domcontentloaded",
-    )
+    print("=" * 60)
+    print("BOSS 登录状态诊断")
+    print("=" * 60)
 
-    print("=" * 50)
-    print("BOSS 自动化测试")
-    print("=" * 50)
-    print("当前网址：", page.url)
-    print()
-    print("请在浏览器中完成登录。")
-    print("登录完成并进入 BOSS 沟通页面后，回到终端。")
-    print()
+    try:
 
-    input("按 Enter 结束本次测试...")
+        print("正在打开 BOSS...")
 
-    context.close()
+        page.goto(
+            BOSS_URL,
+            wait_until="domcontentloaded",
+            timeout=30000
+        )
+
+        print("页面第一次加载完成")
+        print("URL:", page.url)
+
+        time.sleep(5)
+
+        print()
+        print("等待 5 秒后的状态：")
+        print("URL:", page.url)
+        print("Title:", page.title())
+
+        print()
+        print("页面文字前 1000 个字符：")
+
+        try:
+            text = page.locator("body").inner_text(timeout=10000)
+            print(text[:1000])
+        except Exception as e:
+            print("读取页面文字失败：", repr(e))
+
+        print()
+        print("正在保存截图...")
+
+        screenshot_path = DATA_DIR / "boss_login_debug.png"
+        page.screenshot(
+            path=str(screenshot_path),
+            full_page=True
+        )
+
+        print("截图保存到：")
+        print(screenshot_path)
+
+        print()
+        print("=" * 60)
+        print("诊断结束")
+        print("按 Enter 关闭浏览器")
+        print("=" * 60)
+
+        input()
+
+    except Exception as e:
+
+        print()
+        print("=" * 60)
+        print("发生异常")
+        print("=" * 60)
+
+        print(repr(e))
+
+        input()
+
+    finally:
+        context.close()
