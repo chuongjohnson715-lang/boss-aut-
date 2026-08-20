@@ -10,10 +10,14 @@ PROFILE_DIR = DATA_DIR / "edge_profile"
 DATA_DIR.mkdir(exist_ok=True)
 PROFILE_DIR.mkdir(exist_ok=True)
 
-BOSS_URL = "https://www.zhipin.com/web/chat/index"
+BOSS_URL = "https://www.zhipin.com/"
 
 
 with sync_playwright() as p:
+
+    print("=" * 60)
+    print("BOSS 浏览器稳定性诊断")
+    print("=" * 60)
 
     context = p.chromium.launch_persistent_context(
         user_data_dir=str(PROFILE_DIR),
@@ -24,69 +28,77 @@ with sync_playwright() as p:
 
     page = context.pages[0] if context.pages else context.new_page()
 
-    print("=" * 60)
-    print("BOSS 登录状态诊断")
-    print("=" * 60)
-
-    try:
-
-        print("正在打开 BOSS...")
-
-        page.goto(
-            BOSS_URL,
-            wait_until="domcontentloaded",
-            timeout=30000
+    # 监听页面导航
+    page.on(
+        "framenavigated",
+        lambda frame: print(
+            "[NAVIGATED]",
+            frame.url
         )
+    )
 
-        print("页面第一次加载完成")
-        print("URL:", page.url)
+    # 监听页面关闭
+    page.on(
+        "close",
+        lambda: print("[PAGE CLOSED]")
+    )
 
-        time.sleep(5)
+    # 监听新页面
+    context.on(
+        "page",
+        lambda new_page: print(
+            "[NEW PAGE]",
+            new_page.url
+        )
+    )
 
-        print()
-        print("等待 5 秒后的状态：")
-        print("URL:", page.url)
-        print("Title:", page.title())
+    print()
+    print("正在打开 BOSS...")
 
-        print()
-        print("页面文字前 1000 个字符：")
+    page.goto(
+        BOSS_URL,
+        wait_until="domcontentloaded",
+        timeout=30000
+    )
+
+    print()
+    print("第一次加载完成")
+    print("URL:", page.url)
+    print("Title:", page.title())
+
+    print()
+    print("=" * 60)
+    print("现在什么都不要操作")
+    print("不要登录")
+    print("不要点击")
+    print("不要按 Enter")
+    print("=" * 60)
+
+    # 持续观察 30 秒
+    for i in range(30):
+
+        time.sleep(1)
 
         try:
-            text = page.locator("body").inner_text(timeout=10000)
-            print(text[:1000])
+            print(
+                f"[{i + 1:02d}s]",
+                "URL =", page.url,
+                "| TITLE =", page.title()
+            )
+
         except Exception as e:
-            print("读取页面文字失败：", repr(e))
+            print(
+                f"[{i + 1:02d}s]",
+                "页面读取失败:",
+                repr(e)
+            )
+            break
 
-        print()
-        print("正在保存截图...")
+    print()
+    print("=" * 60)
+    print("诊断结束")
+    print("=" * 60)
 
-        screenshot_path = DATA_DIR / "boss_login_debug.png"
-        page.screenshot(
-            path=str(screenshot_path),
-            full_page=True
-        )
+    input("按 Enter 关闭浏览器...")
 
-        print("截图保存到：")
-        print(screenshot_path)
-
-        print()
-        print("=" * 60)
-        print("诊断结束")
-        print("按 Enter 关闭浏览器")
-        print("=" * 60)
-
-        input()
-
-    except Exception as e:
-
-        print()
-        print("=" * 60)
-        print("发生异常")
-        print("=" * 60)
-
-        print(repr(e))
-
-        input()
-
-    finally:
-        context.close()
+    context.close()
