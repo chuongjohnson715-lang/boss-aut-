@@ -19,3 +19,4 @@ print()
 print("=" * 50)
 print("检测结束")
 print("=" * 50)
+saf
