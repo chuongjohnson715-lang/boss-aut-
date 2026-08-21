@@ -1,4 +1,4 @@
-import ctypes
+﻿import ctypes
 from pathlib import Path
 
 import win32gui
@@ -16,61 +16,61 @@ class EdgeController:
         self.title = None
 
     def find_edge(self):
-         def activate(self):
-            if self.hwnd is None:
-                return False
+        import ctypes
+        import psutil
 
-            if not win32gui.IsWindow(self.hwnd):
-                return False
+        user32 = ctypes.windll.user32
+        kernel32 = ctypes.windll.kernel32
 
-            if win32gui.IsIconic(self.hwnd):
-                win32gui.ShowWindow(self.hwnd, 9)
+        found_hwnds = []
+
+        def enum_callback(hwnd, _):
+            if not user32.IsWindowVisible(hwnd):
+                return True
+
+            pid = ctypes.c_ulong()
+            user32.GetWindowThreadProcessId(hwnd, ctypes.byref(pid))
 
             try:
-                import ctypes
-                import time
+                proc = psutil.Process(pid.value)
+                proc_name = proc.name().lower()
+            except (psutil.NoSuchProcess, psutil.AccessDenied):
+                return True
 
-                user32 = ctypes.windll.user32
+            title_length = user32.GetWindowTextLengthW(hwnd) + 1
+            title_buf = ctypes.create_unicode_buffer(title_length)
+            user32.GetWindowTextW(hwnd, title_buf, title_length)
+            title = title_buf.value
 
-                current_thread = user32.GetCurrentThreadId()
+            print(f"  HWND={hwnd}  PID={pid.value}  "
+                  f"proc={proc_name}  visible=True  "
+                  f"title={title[:40] if title else '(空)'}")
 
-                target_thread = user32.GetWindowThreadProcessId(
-                    self.hwnd,
-                    None
-                )
+            if proc_name == "msedge.exe":
+                found_hwnds.append(hwnd)
 
-                attached = False
+            return True
 
-                if current_thread != target_thread:
-                    attached = user32.AttachThreadInput(
-                        current_thread,
-                        target_thread,
-                        True
-                    )
+        enum_windows = user32.EnumWindows
+        enum_windows.argtypes = [ctypes.WINFUNCTYPE(ctypes.c_bool, ctypes.c_int, ctypes.c_int), ctypes.c_int]
+        enum_windows.restype = ctypes.c_bool
 
-                try:
-                    user32.BringWindowToTop(self.hwnd)
-                    user32.SetForegroundWindow(self.hwnd)
-                    user32.SetActiveWindow(self.hwnd)
+        enum_proc = ctypes.WINFUNCTYPE(ctypes.c_bool, ctypes.c_int, ctypes.c_int)(enum_callback)
+        enum_windows(enum_proc, 0)
 
-                finally:
-                    if attached:
-                        user32.AttachThreadInput(
-                            current_thread,
-                            target_thread,
-                            False
-                        )
+        if not found_hwnds:
+            print("未找到任何 msedge.exe 窗口")
+            return False
 
-                time.sleep(0.5)
+        self.hwnd = found_hwnds[0]
 
-                current_hwnd = win32gui.GetForegroundWindow()
+        title_length = user32.GetWindowTextLengthW(self.hwnd) + 1
+        title_buf = ctypes.create_unicode_buffer(title_length)
+        user32.GetWindowTextW(self.hwnd, title_buf, title_length)
+        self.title = title_buf.value
 
-                return current_hwnd == self.hwnd
-
-            except Exception as e:
-                print("激活 Edge 时发生异常：")
-                print(repr(e))
-                return False
+        print(f"选用 Edge HWND={self.hwnd}  title={self.title}")
+        return True
 
     def activate(self):
         if self.hwnd is None:
@@ -84,10 +84,12 @@ class EdgeController:
 
         try:
             import ctypes
+            import time
 
             user32 = ctypes.windll.user32
+            kernel32 = ctypes.windll.kernel32
 
-            current_thread = user32.GetCurrentThreadId()
+            current_thread = kernel32.GetCurrentThreadId()
 
             target_thread = user32.GetWindowThreadProcessId(
                 self.hwnd,
@@ -116,7 +118,6 @@ class EdgeController:
                         False
                     )
 
-            import time
             time.sleep(0.5)
 
             current_hwnd = win32gui.GetForegroundWindow()
@@ -199,3 +200,4 @@ class EdgeController:
         )
 
         return save_path
+
