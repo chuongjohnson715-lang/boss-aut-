@@ -201,3 +201,61 @@ class EdgeController:
 
         return save_path
 
+    def capture_dwm(self, filename="edge_dwm.png"):
+
+        if self.hwnd is None:
+            return False
+
+        import ctypes
+        from ctypes import wintypes
+
+        dwm = ctypes.windll.dwmapi
+        user32 = ctypes.windll.user32
+
+        dwr = wintypes.RECT()
+        dwm.DwmGetWindowAttribute(
+            self.hwnd, 9,
+            ctypes.byref(dwr), ctypes.sizeof(dwr)
+        )
+        dwm_w = dwr.right - dwr.left
+        dwm_h = dwr.bottom - dwr.top
+
+        hwnd_dc = win32gui.GetWindowDC(self.hwnd)
+        mfc_dc = win32ui.CreateDCFromHandle(hwnd_dc)
+        save_dc = mfc_dc.CreateCompatibleDC()
+
+        bitmap = win32ui.CreateBitmap()
+        bitmap.CreateCompatibleBitmap(mfc_dc, dwm_w, dwm_h)
+        save_dc.SelectObject(bitmap)
+
+        result = user32.PrintWindow(
+            self.hwnd,
+            save_dc.GetSafeHdc(),
+            2
+        )
+
+        if result != 1:
+            save_dc.DeleteDC()
+            mfc_dc.DeleteDC()
+            win32gui.ReleaseDC(self.hwnd, hwnd_dc)
+            return False
+
+        bitmap_info = bitmap.GetInfo()
+        bitmap_bits = bitmap.GetBitmapBits(True)
+
+        image = Image.frombuffer(
+            "RGB",
+            (bitmap_info["bmWidth"], bitmap_info["bmHeight"]),
+            bitmap_bits,
+            "raw", "BGRX", 0, 1
+        )
+
+        save_path = self.data_dir / filename
+        image.save(save_path)
+
+        win32gui.DeleteObject(bitmap.GetHandle())
+        save_dc.DeleteDC()
+        mfc_dc.DeleteDC()
+        win32gui.ReleaseDC(self.hwnd, hwnd_dc)
+
+        return save_path

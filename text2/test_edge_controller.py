@@ -51,7 +51,7 @@ print("bottom:", rect[3])
 print()
 print("④ 截图")
 
-path = controller.capture(
+path = controller.capture_dwm(
     "edge_controller_test.png"
 )
 
