@@ -1,0 +1,44 @@
+{
+  "boss_url": "https://www.zhipin.com/web/chat/index",
+  "candidate_list_url": "https://www.zhipin.com/web/chat/index",
+  "max_candidates": 50,
+  "wait_reply_seconds": 45,
+  "wait_page_timeout": 15000,
+  "skip_contacted": true,
+  "cdp_url": "",
+  "common_message_1": "您好，我是公司招聘负责人，看到您的简历很符合我们的岗位，方便进一步沟通吗？",
+  "common_message_2": "感谢您的回复！方便发一份简历吗？我们评估后会尽快给您反馈。",
+  "education_check": {
+    "enable": true,
+    "whitelist": [
+      "北京大学", "清华大学", "复旦大学", "上海交通大学", "浙江大学", "南京大学",
+      "中国科学技术大学", "哈尔滨工业大学", "西安交通大学", "中国人民大学",
+      "北京航空航天大学", "北京理工大学", "南开大学", "天津大学", "大连理工大学",
+      "东北大学", "吉林大学", "同济大学", "华东师范大学", "东南大学",
+      "厦门大学", "山东大学", "中国海洋大学", "武汉大学", "华中科技大学",
+      "湖南大学", "中南大学", "中山大学", "华南理工大学", "四川大学",
+      "重庆大学", "电子科技大学", "西北工业大学", "兰州大学", "国防科技大学",
+      "中央民族大学", "中国农业大学", "西北农林科技大学", "中国科学院大学",
+      "北京邮电大学", "上海财经大学", "中央财经大学", "对外经济贸易大学",
+      "中国政法大学", "北京外国语大学", "上海外国语大学", "西安电子科技大学",
+      "北京交通大学", "南京航空航天大学", "南京理工大学", "华中师范大学",
+      "暨南大学", "苏州大学", "华东理工大学", "武汉理工大学", "西南交通大学",
+      "哈尔滨工程大学", "北京科技大学", "北京化工大学", "中国传媒大学",
+      "华北电力大学", "西南财经大学", "中南财经政法大学", "河海大学",
+      "东华大学", "长安大学", "合肥工业大学", "河北工业大学", "太原理工大学"
+    ]
+  },
+  "other_conditions": {
+    "enable": true,
+    "require_keywords": [],
+    "exclude_keywords": ["频繁跳槽", "经验不符", "期望薪资过高"]
+  },
+  "selectors": {
+    "candidate_item": "[class*='chat-item'], [class*='user-item'], [class*='candidate-item'], [class*='session-item']",
+    "candidate_name": "[class*='name'], [class*='user-name']",
+    "message_input": "[class*='message-input'] textarea, textarea[placeholder*='发送'], [contenteditable='true']",
+    "send_button": "button:has-text('发送'), [class*='send']",
+    "pin_button": "button:has-text('置顶'), [class*='pin']",
+    "resume_text": "简历, 附件, .pdf, .doc, .docx"
+  }
+}

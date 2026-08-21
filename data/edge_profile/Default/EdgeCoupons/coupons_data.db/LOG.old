@@ -1,0 +1,6 @@
+2026/08/21-16:37:26.799 8aa8 Reusing MANIFEST C:\Users\Lenovo\Desktop\boss GUI base v1.1\data\edge_profile\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
+2026/08/21-16:37:26.800 8aa8 Recovering log #7
+2026/08/21-16:37:26.801 8aa8 Reusing old log C:\Users\Lenovo\Desktop\boss GUI base v1.1\data\edge_profile\Default\EdgeCoupons/coupons_data.db/000007.log 
+2026/08/21-16:37:27.161 752c Level-0 table #11: started
+2026/08/21-16:37:27.163 752c Level-0 table #11: 683444 bytes OK
+2026/08/21-16:37:27.164 752c Delete type=0 #7

@@ -19,7 +19,7 @@ input_controller = InputController()
 print()
 print("① 查找 Edge")
 
-if not edge.find():
+if not edge.find_edge():
     print("Edge 查找失败")
     raise SystemExit
 

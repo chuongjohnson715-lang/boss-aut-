@@ -1,4 +1,4 @@
-﻿import ctypes
+import ctypes
 from pathlib import Path
 
 import win32gui
@@ -20,9 +20,8 @@ class EdgeController:
         import psutil
 
         user32 = ctypes.windll.user32
-        kernel32 = ctypes.windll.kernel32
 
-        found_hwnds = []
+        found = []
 
         def enum_callback(hwnd, _):
             if not user32.IsWindowVisible(hwnd):
@@ -47,7 +46,7 @@ class EdgeController:
                   f"title={title[:40] if title else '(空)'}")
 
             if proc_name == "msedge.exe":
-                found_hwnds.append(hwnd)
+                found.append((hwnd, title))
 
             return True
 
@@ -58,19 +57,28 @@ class EdgeController:
         enum_proc = ctypes.WINFUNCTYPE(ctypes.c_bool, ctypes.c_int, ctypes.c_int)(enum_callback)
         enum_windows(enum_proc, 0)
 
-        if not found_hwnds:
+        if not found:
             print("未找到任何 msedge.exe 窗口")
             return False
 
-        self.hwnd = found_hwnds[0]
+        # 优先选择 BOSS 直聘页面窗口，找不到再回退到任意 Edge 窗口
+        boss_hwnds = [(h, t) for h, t in found if self._is_boss_window(t)]
+        chosen_hwnd, chosen_title = (boss_hwnds or found)[0]
 
-        title_length = user32.GetWindowTextLengthW(self.hwnd) + 1
-        title_buf = ctypes.create_unicode_buffer(title_length)
-        user32.GetWindowTextW(self.hwnd, title_buf, title_length)
-        self.title = title_buf.value
+        self.hwnd = chosen_hwnd
+        self.title = chosen_title
 
-        print(f"选用 Edge HWND={self.hwnd}  title={self.title}")
+        marker = "（BOSS 直聘页面）" if self._is_boss_window(chosen_title) else ""
+        print(f"选用 Edge HWND={self.hwnd}  title={self.title} {marker}")
         return True
+
+    @staticmethod
+    def _is_boss_window(title):
+        """根据窗口标题判断是否为 BOSS 直聘页面。"""
+        if not title:
+            return False
+        t = title.lower()
+        return any(k in t for k in ("boss", "zhipin", "直聘"))
 
     def activate(self):
         if self.hwnd is None:
@@ -259,3 +267,5 @@ class EdgeController:
         win32gui.ReleaseDC(self.hwnd, hwnd_dc)
 
         return save_path
+def find(self):
+    return self.find_edge()

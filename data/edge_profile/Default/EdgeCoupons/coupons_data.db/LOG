@@ -1,5 +1,6 @@
-2026/08/20-10:36:53.531 75d0 Creating DB C:\Users\Lenovo\Desktop\boss GUI base v1.1\data\edge_profile\Default\EdgeCoupons/coupons_data.db since it was missing.
-2026/08/20-10:36:53.581 75d0 Reusing MANIFEST C:\Users\Lenovo\Desktop\boss GUI base v1.1\data\edge_profile\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
-2026/08/20-10:36:53.826 78a4 Level-0 table #5: started
-2026/08/20-10:36:53.829 78a4 Level-0 table #5: 683273 bytes OK
-2026/08/20-10:36:53.831 78a4 Delete type=0 #3
+2026/08/21-16:38:12.492 925c Reusing MANIFEST C:\Users\Lenovo\Desktop\boss GUI base v1.1\data\edge_profile\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
+2026/08/21-16:38:12.493 925c Recovering log #10
+2026/08/21-16:38:12.495 925c Reusing old log C:\Users\Lenovo\Desktop\boss GUI base v1.1\data\edge_profile\Default\EdgeCoupons/coupons_data.db/000010.log 
+2026/08/21-16:38:12.774 90fc Level-0 table #14: started
+2026/08/21-16:38:12.777 90fc Level-0 table #14: 683444 bytes OK
+2026/08/21-16:38:12.778 90fc Delete type=0 #10

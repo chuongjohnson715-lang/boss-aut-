@@ -10,3 +10,36 @@
 2026-08-20 02:36:50.071: [INFO] BookmarksLoadDropped droppedNodes=0
 2026-08-20 02:36:50.071: [INFO] BookmarksSnapshot Startup total=2 bar=2 other=0 mobile=0 showBar=0 showBarNTP=1
 2026-08-20 02:37:01.170: [INFO] BookmarksSnapshot Shutdown total=2 bar=2 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-08-21 08:31:19.513: [INFO] CurrentProfilePath: C:\Users\Lenovo\Desktop\boss GUI base v1.1\data\edge_profile\Default
+2026-08-21 08:31:19.513: [INFO] Profiles total count: 1
+2026-08-21 08:31:19.513: [INFO] Profile: name=个人 path=C:\Users\Lenovo\Desktop\boss GUI base v1.1\data\edge_profile\Default lastActive=2026-08-20T02:36:50.048Z
+2026-08-21 08:31:19.513: [INFO] LastUsedProfileDir: C:\Users\Lenovo\Desktop\boss GUI base v1.1\data\edge_profile\Default
+2026-08-21 08:31:19.513: [INFO] MostRecentlyActiveProfile: name=个人 path=C:\Users\Lenovo\Desktop\boss GUI base v1.1\data\edge_profile\Default lastActive=2026-08-20T02:36:50.048Z
+2026-08-21 08:31:19.513: [INFO] VisibilityChanged: 0
+2026-08-21 08:31:19.578: [INFO] OnDoneLoading sync enabled: 0
+2026-08-21 08:31:19.578: [INFO] BookmarkModelLoaded, ids_reassigned: 0
+2026-08-21 08:31:19.578: [INFO] BookmarksLoadDropped droppedNodes=0
+2026-08-21 08:31:19.578: [INFO] BookmarksSnapshot Startup total=2 bar=2 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-08-21 08:31:26.719: [INFO] BookmarksSnapshot Shutdown total=2 bar=2 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-08-21 08:37:24.657: [INFO] CurrentProfilePath: C:\Users\Lenovo\Desktop\boss GUI base v1.1\data\edge_profile\Default
+2026-08-21 08:37:24.657: [INFO] Profiles total count: 1
+2026-08-21 08:37:24.657: [INFO] Profile: name=个人 path=C:\Users\Lenovo\Desktop\boss GUI base v1.1\data\edge_profile\Default lastActive=2026-08-21T08:31:19.557Z
+2026-08-21 08:37:24.657: [INFO] LastUsedProfileDir: C:\Users\Lenovo\Desktop\boss GUI base v1.1\data\edge_profile\Default
+2026-08-21 08:37:24.657: [INFO] MostRecentlyActiveProfile: name=个人 path=C:\Users\Lenovo\Desktop\boss GUI base v1.1\data\edge_profile\Default lastActive=2026-08-21T08:31:19.557Z
+2026-08-21 08:37:24.657: [INFO] VisibilityChanged: 0
+2026-08-21 08:37:24.721: [INFO] OnDoneLoading sync enabled: 0
+2026-08-21 08:37:24.721: [INFO] BookmarkModelLoaded, ids_reassigned: 0
+2026-08-21 08:37:24.721: [INFO] BookmarksLoadDropped droppedNodes=0
+2026-08-21 08:37:24.721: [INFO] BookmarksSnapshot Startup total=2 bar=2 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-08-21 08:37:29.614: [INFO] BookmarksSnapshot Shutdown total=2 bar=2 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-08-21 08:38:10.316: [INFO] CurrentProfilePath: C:\Users\Lenovo\Desktop\boss GUI base v1.1\data\edge_profile\Default
+2026-08-21 08:38:10.316: [INFO] Profiles total count: 1
+2026-08-21 08:38:10.316: [INFO] Profile: name=个人 path=C:\Users\Lenovo\Desktop\boss GUI base v1.1\data\edge_profile\Default lastActive=2026-08-21T08:37:29.232Z
+2026-08-21 08:38:10.316: [INFO] LastUsedProfileDir: C:\Users\Lenovo\Desktop\boss GUI base v1.1\data\edge_profile\Default
+2026-08-21 08:38:10.316: [INFO] MostRecentlyActiveProfile: name=个人 path=C:\Users\Lenovo\Desktop\boss GUI base v1.1\data\edge_profile\Default lastActive=2026-08-21T08:37:29.232Z
+2026-08-21 08:38:10.316: [INFO] VisibilityChanged: 0
+2026-08-21 08:38:10.372: [INFO] OnDoneLoading sync enabled: 0
+2026-08-21 08:38:10.372: [INFO] BookmarkModelLoaded, ids_reassigned: 0
+2026-08-21 08:38:10.372: [INFO] BookmarksLoadDropped droppedNodes=0
+2026-08-21 08:38:10.372: [INFO] BookmarksSnapshot Startup total=2 bar=2 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-08-21 08:38:15.247: [INFO] BookmarksSnapshot Shutdown total=2 bar=2 other=0 mobile=0 showBar=0 showBarNTP=1
